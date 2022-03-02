@@ -4,13 +4,23 @@ from django.http import HttpResponse
 
 # Главная страница
 def index(request):    
-    return HttpResponse('Main page')
+    template_name = "posts/index.html"
+    text = "Это главная страница проекта Yatube"
+    context = {
+        'text': text
+    }
+    return render(request, template_name, context)
 
 
     # Страница со списком мороженого
 def group_posts(request, slug):
-    return HttpResponse('Group posts with slug {}'.format(slug))
+    template_name = "posts/group_list.html"
+    text = "Здесь будет информация о группах проекта Yatube"
+    context = {
+        'text': text
+    }
+    return render(request, template_name, context)
 
 
 
-# Create your views here.
+
