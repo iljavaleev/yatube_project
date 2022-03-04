@@ -1,23 +1,24 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
+from .models import Post, Group
 
 
-# Главная страница
-def index(request):    
+def index(request):
     template_name = "posts/index.html"
-    text = "Это главная страница проекта Yatube"
+    posts = Post.objects.order_by('-pub_date')[:10]
     context = {
-        'text': text
+        'posts': posts,
     }
     return render(request, template_name, context)
 
 
-    # Страница со списком мороженого
 def group_posts(request, slug):
     template_name = "posts/group_list.html"
-    text = "Здесь будет информация о группах проекта Yatube"
+    group = get_object_or_404(Group, slug=slug)
+    posts = Post.objects.filter(group=group).order_by('-pub_date')[:10]
     context = {
-        'text': text
+        'posts': posts,
+        'group': group,
     }
     return render(request, template_name, context)
 
